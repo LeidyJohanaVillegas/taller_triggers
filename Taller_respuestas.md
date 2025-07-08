@@ -13,7 +13,7 @@ En este taller, aprenderás a utilizar **Triggers** en MySQL a través de casos 
 Una tienda en línea necesita asegurarse de que los clientes no puedan comprar más unidades de un producto del stock disponible. Si intentan hacerlo, la compra debe **bloquearse**.
 
 **TAREA:**
-
+```
 1. Crear las tablas productos y ventas.
 RTA:
 CREATE TABLE productos (
@@ -51,7 +51,7 @@ INSERT INTO ventas (id_producto, cantidad) VALUES (1, 10);
 RTA:
 mysql> INSERT INTO ventas (id_producto, cantidad) VALUES (1, 10);
 ERROR 1644 (45000): Sin cantidad solicitada
-
+```
 **🔹 Caso 2: Registro Automático de Cambios en Salarios**
 
 ### **Escenario:**
@@ -59,7 +59,7 @@ ERROR 1644 (45000): Sin cantidad solicitada
 La empresa **TechCorp** desea mantener un registro histórico de todos los cambios de salario de sus empleados.
 
 ### **Tarea:**
-
+```
 1. Crear las tablas `empleados` y `historial_salarios`.
 RTA: 
 CREATE TABLE empleados (
@@ -100,7 +100,7 @@ mysql> SELECT id_empleado, salario_anterior, salario_nuevo FROM historial_salari
 |           1 |          3000.00 |       4000.00 |
 +-------------+------------------+---------------+
 1 row in set (0.00 sec)
-
+```
 🔹 Caso 3: Registro de Eliminaciones en Auditoría**
 
 ### **Escenario:**
@@ -108,7 +108,7 @@ mysql> SELECT id_empleado, salario_anterior, salario_nuevo FROM historial_salari
 La empresa **DataSecure** quiere registrar toda eliminación de clientes en una tabla de auditoría para evitar pérdidas accidentales de datos.
 
 ### **Tarea:**
-
+```
 1. Crear las tablas `clientes` y `clientes_auditoria`.
 RTA:
 CREATE TABLE clientes (
@@ -159,7 +159,7 @@ RTA:
 +------------+-------------+------------------+
 |          1 | Juan Pérez  | juan@example.com |
 +------------+-------------+------------------+
-
+```
 **🔹 Caso 4: Restricción de Eliminación de Pedidos Pendientes**
 
 ### **Escenario:**
@@ -167,7 +167,7 @@ RTA:
 En un sistema de ventas, no se debe permitir eliminar pedidos que aún están **pendientes**.
 
 ### **Tarea:**
-
+```
 1. Crear las tablas `pedidos`.
 RTA:
 CREATE TABLE pedidos (
@@ -200,3 +200,4 @@ mysql> DELETE FROM pedidos WHERE cliente = 'Maria';
 Query OK, 1 row affected (0.01 sec)
 mysql> DELETE FROM pedidos WHERE cliente = 'Carlos';
 ERROR 1644 (45000): No se puede eliminar un pedido pendiente.
+```
