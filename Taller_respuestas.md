@@ -13,9 +13,10 @@ En este taller, aprenderás a utilizar **Triggers** en MySQL a través de casos 
 Una tienda en línea necesita asegurarse de que los clientes no puedan comprar más unidades de un producto del stock disponible. Si intentan hacerlo, la compra debe **bloquearse**.
 
 **TAREA:**
-```
+
 1. Crear las tablas productos y ventas.
 RTA:
+```
 CREATE TABLE productos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50),
@@ -27,9 +28,10 @@ CREATE TABLE ventas (
     cantidad INT,
     FOREIGN KEY (id_producto) REFERENCES productos(id)
 );
-
-2. Implementar un trigger BEFORE INSERT para evitar ventas con cantidad mayor al stock disponible.
+```
+3. Implementar un trigger BEFORE INSERT para evitar ventas con cantidad mayor al stock disponible.
 RTA:
+```
 DELIMITER //
 CREATE TRIGGER before_stock_productos 
 BEFORE INSERT ON ventas
@@ -46,9 +48,10 @@ DELIMITER ;
 
 INSERT INTO productos (nombre, stock) VALUES ('Televisor 40"', 4);
 INSERT INTO ventas (id_producto, cantidad) VALUES (1, 10);
-
+```
 3. Probar el trigger.
 RTA:
+```
 mysql> INSERT INTO ventas (id_producto, cantidad) VALUES (1, 10);
 ERROR 1644 (45000): Sin cantidad solicitada
 ```
@@ -59,9 +62,10 @@ ERROR 1644 (45000): Sin cantidad solicitada
 La empresa **TechCorp** desea mantener un registro histórico de todos los cambios de salario de sus empleados.
 
 ### **Tarea:**
-```
+
 1. Crear las tablas `empleados` y `historial_salarios`.
-RTA: 
+RTA:
+```
 CREATE TABLE empleados (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50),
@@ -75,9 +79,10 @@ CREATE TABLE historial_salarios (
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_empleado) REFERENCES empleados(id)
 );
-
-2. Implementar un trigger `BEFORE UPDATE` que registre cualquier cambio en el salario.
+```
+3. Implementar un trigger `BEFORE UPDATE` que registre cualquier cambio en el salario.
 RTA:
+```
 DELIMITER //
 CREATE TRIGGER before_salarios_update 
 BEFORE UPDATE ON empleados
@@ -90,9 +95,10 @@ DELIMITER ;
 INSERT INTO empleados (nombre, salario) VALUES ('Johana Niño', 3000.00);
 UPDATE empleados SET salario = 4000.00 WHERE id = 1;
 SELECT id_empleado, salario_anterior, salario_nuevo FROM historial_salarios;
-
+```
 3. Probar el trigger.
 RTA:
+```
 mysql> SELECT id_empleado, salario_anterior, salario_nuevo FROM historial_salarios;
 +-------------+------------------+---------------+
 | id_empleado | salario_anterior | salario_nuevo |
@@ -108,9 +114,10 @@ mysql> SELECT id_empleado, salario_anterior, salario_nuevo FROM historial_salari
 La empresa **DataSecure** quiere registrar toda eliminación de clientes en una tabla de auditoría para evitar pérdidas accidentales de datos.
 
 ### **Tarea:**
-```
+
 1. Crear las tablas `clientes` y `clientes_auditoria`.
 RTA:
+```
 CREATE TABLE clientes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50),
@@ -123,9 +130,10 @@ CREATE TABLE clientes_auditoria (
     email VARCHAR(50),
     fecha_eliminacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-2. Implementar un trigger `AFTER DELETE` para registrar los clientes eliminados.
+```
+3. Implementar un trigger `AFTER DELETE` para registrar los clientes eliminados.
 RTA:
+```
 DELIMITER //
 CREATE TRIGGER before_clientes_delete 
 AFTER DELETE ON clientes
@@ -151,9 +159,10 @@ SELECT id, nombre, email FROM clientes;
 |  2 | Ana Gómez  | ana@example.com |
 +----+------------+-----------------+
 SELECT id_cliente, nombre, email FROM clientes_auditoria;
-
+```
 3. Probar el trigger.
 RTA:
+```
 +------------+-------------+------------------+
 | id_cliente | nombre      | email            |
 +------------+-------------+------------------+
@@ -167,17 +176,19 @@ RTA:
 En un sistema de ventas, no se debe permitir eliminar pedidos que aún están **pendientes**.
 
 ### **Tarea:**
-```
+
 1. Crear las tablas `pedidos`.
 RTA:
+```
 CREATE TABLE pedidos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     cliente VARCHAR(100),
     estado ENUM('pendiente', 'completado')
 );
-
-2. Implementar un trigger `BEFORE DELETE` para evitar la eliminación de pedidos pendientes.
+```
+3. Implementar un trigger `BEFORE DELETE` para evitar la eliminación de pedidos pendientes.
 RTA:
+```
 DELIMITER //
 CREATE TRIGGER before_pedidos_delete
 BEFORE DELETE ON pedidos
@@ -193,9 +204,10 @@ DELIMITER ;
 INSERT INTO pedidos (cliente, estado) VALUES ('Carlos', 'pendiente'), ('Maria', 'completado');
 DELETE FROM pedidos WHERE cliente = 'Maria';
 DELETE FROM pedidos WHERE cliente = 'Carlos';
-
+```
 3. Probar el trigger.
 RTA:
+```
 mysql> DELETE FROM pedidos WHERE cliente = 'Maria';
 Query OK, 1 row affected (0.01 sec)
 mysql> DELETE FROM pedidos WHERE cliente = 'Carlos';
